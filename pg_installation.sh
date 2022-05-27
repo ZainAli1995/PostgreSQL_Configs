@@ -11,6 +11,7 @@ help(){
 initDB(){
 	
 	local VERSION=${1}
+	
 	echo "sudo /usr/pgsql-${VERSION}/bin/postgresql-${VERSION}-setup initdb"
 	echo "sudo systemctl enable postgresql-${VERSION}"
 	echo "sudo systemctl start postgresql-${VERSION}"
@@ -28,6 +29,11 @@ do
 	
 	v) 
 	   VERSION=${OPTARG}
+	   
+	   if [[ ${VERSION} -lt 10 ]] || [[ ${VERSION} -gt 14 ]] ; then
+		echo "ERROR: Invalid PostgreSQL Version Specified"
+	  	exit 1
+	   fi
 	   ;;
 
 	d)
